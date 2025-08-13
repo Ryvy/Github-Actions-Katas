@@ -1,26 +1,10 @@
-name: CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+name: Main workflow
+on: push
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
-
+    container: gradle:6-jdk11
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Clone down repository
+        uses: actions/checkout@v4       
+      - run: ci/build-app.sh
